@@ -1,4 +1,4 @@
-import { majorScale } from './constants/maps';
+import { majorScale, scaleSteps } from './constants/maps';
 import { Progression } from './constants/models';
 
 export const getChordProgression = (
@@ -7,6 +7,10 @@ export const getChordProgression = (
   length: number,
   isDiminished: boolean,
   resolveRoot: boolean): Progression => {
+  console.log(getModalChords(mode));
+
+  console.log(getModalSteps(mode));
+
   const p: Progression = {
     Key: 'C',
     Mode: 'Aoelian',
@@ -15,20 +19,35 @@ export const getChordProgression = (
   }
 
   return p;
-}
+};
 
-export const getModalChords = (mode: number) => {
+const getModalChords = (mode: number) => {
   if (mode === 0) {
     return majorScale;
   }
 
-  const precedingScale = majorScale.slice(0, mode);
+  const precedingScaleChords = majorScale.slice(0, mode);
   const modalScale = majorScale.slice(mode);
 
-  precedingScale.forEach(chord => {
+  precedingScaleChords.forEach(chord => {
     modalScale.push(chord);
   });
 
   return modalScale;
+};
+
+const getModalSteps = (mode: number) => {
+  if (mode === 0) {
+    return scaleSteps;
+  }
+
+  const precedingSteps = scaleSteps.slice(0, mode);
+  const modalSteps = scaleSteps.slice(mode);
+
+  precedingSteps.forEach(step => {
+    modalSteps.push(step);
+  });
+
+  return modalSteps;
 }
 

@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid } from "@chakra-ui/react"
 import { KeyList, ModeList } from './constants/form';
-import { getChordProgression, getModalChords } from './generator';
+import { getChordProgression } from './generator';
 import './App.css';
 
 const App = () => {
-  const [key, setKey] = useState(0);
-  const [mode, setMode] = useState(0);
+  const [key, setKey] = useState<number | null>(null);
+  const [mode, setMode] = useState<number | null>(null);
   const [length, setLength] = useState(2);
   const [isDiminished, setIsDiminished] = useState(false);
   const [resolveRoot, setResolveRoot] = useState(true);
 
   const generateProgression = () => {
-    if (!key || !mode) {
+    if (key === null || mode === null) {
       console.log('Problem with form input');
+    } else {
+      getChordProgression(key!, mode!, length, isDiminished, resolveRoot);
     }
-
-    getChordProgression(key, mode, length, isDiminished, resolveRoot);
   };
 
   return (
