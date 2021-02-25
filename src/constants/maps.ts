@@ -42,7 +42,7 @@ export const notes = [
     'Bb',
     'B',
     'C',
-    'Db',
+    'C#',
     'D',
     'Eb',
     'E',

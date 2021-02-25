@@ -1,4 +1,4 @@
-import { majorScale, scaleSteps } from './constants/maps';
+import { majorScale, notes, scaleSteps } from './constants/maps';
 import { Progression } from './constants/models';
 
 export const getChordProgression = (
@@ -7,9 +7,11 @@ export const getChordProgression = (
   length: number,
   isDiminished: boolean,
   resolveRoot: boolean): Progression => {
-  console.log(getModalChords(mode));
+  const chords = getModalChords(mode);
+  const steps = getModalSteps(mode);
+  const notes = getModalNotes(key, steps);
+  console.log(notes);
 
-  console.log(getModalSteps(mode));
 
   const p: Progression = {
     Key: 'C',
@@ -49,5 +51,19 @@ const getModalSteps = (mode: number) => {
   });
 
   return modalSteps;
+}
+
+const getModalNotes = (key: number, modalSteps: number[]) => {
+  let root = key;
+  const modalNotes: string[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    modalNotes[i] = notes[root];
+    root += modalSteps[i];
+  }
+
+  console.log(modalNotes);
+
+  return modalNotes;
 }
 
