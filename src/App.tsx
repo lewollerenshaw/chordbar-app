@@ -11,7 +11,15 @@ function App() {
   const [resolveRoot, setResolveRoot] = useState(true);
 
   const generateProgression = () => {
+    console.log('hit');
+
+    if (key === '')
+      console.log('invalid');
+    if (mode === '')
+      console.log('invalid mode');
+
     
+
   }
 
   return (
@@ -25,7 +33,7 @@ function App() {
         <div className="form__inputs">
           <SimpleGrid columns={[1, 1, 3]} spacing={10}>
             <Box>
-              <FormControl id="first-name" isRequired>
+              <FormControl id="key" isRequired>
                 <FormLabel>Key</FormLabel>
                 <Select placeholder="Please select" onChange={(e) => setKey(e.target.value)}>
                   {KeyList.map((key) => (
@@ -36,7 +44,7 @@ function App() {
               </FormControl>
             </Box>
             <Box>
-              <FormControl id="first-name" isRequired>
+              <FormControl id="mode" isRequired>
                 <FormLabel>Mode</FormLabel>
                 <Select placeholder="Please select" onChange={(e) => setMode(e.target.value)}>
                   {ModeList.map((key) => (
@@ -47,7 +55,7 @@ function App() {
               </FormControl>
             </Box>
             <Box>
-              <FormControl id="first-name" isRequired>
+              <FormControl id="progression-length">
                 <FormLabel>Progression length</FormLabel>
                 <NumberInput defaultValue={2} min={2} max={10} onChange={(e) => setLength(e)}>
                   <NumberInputField />
@@ -68,7 +76,7 @@ function App() {
         </div>
 
         <div className="form__submit">
-          <Button colorScheme="blue">Go</Button>
+          <Button colorScheme="blue" onClick={() => generateProgression()}>Go</Button>
         </div>
       </form>
 
