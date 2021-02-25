@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid } from "@chakra-ui/react"
 import { KeyList, ModeList } from './constants/form';
-import { getChordProgression, getModalChords } from './services/generator';
+import { getChordProgression, getModalChords } from './generator';
 import './App.css';
 
 const App = () => {
@@ -12,23 +12,11 @@ const App = () => {
   const [resolveRoot, setResolveRoot] = useState(true);
 
   const generateProgression = () => {
-    console.log('hit');
-
-    if (key || mode) {
-      console.log('invalid');
+    if (!key || !mode) {
+      console.log('Problem with form input');
     }
 
-    console.log(getModalChords(mode));
-    
-    const progression = getChordProgression(
-      key,
-      mode,
-      length
-    );
-
-    console.log(length);
-    console.log(isDiminished);
-    console.log(resolveRoot);
+    getChordProgression(key, mode, length, isDiminished, resolveRoot);
   };
 
   return (
