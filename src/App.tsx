@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid } from "@chakra-ui/react"
 import { KeyList, ModeList } from './constants/form';
-import { getChordProgression } from './services/generators';
+import { getChordProgression, getModalChords } from './services/generator';
 import './App.css';
 
 const App = () => {
@@ -18,6 +18,8 @@ const App = () => {
       console.log('invalid');
     }
 
+    console.log(getModalChords(mode));
+    
     const progression = getChordProgression(
       key,
       mode,
