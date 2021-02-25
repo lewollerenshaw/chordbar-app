@@ -1,8 +1,4 @@
-interface Map {
-    [val: number]: string | number
-};
-
-export const modeMap: Map = {
+export const Modes = {
     1: "Ionian",
     2: "Dorian",
     3: "Phrygian",
@@ -10,9 +6,9 @@ export const modeMap: Map = {
     5: "Mixolydian",
     6: "Aoelian",
     7: "Locrian"
-};
+}
 
-export const majorScaleChordMap: Map = {
+export const MajorScale = {
     1: "Major",
     2: "Minor",
     3: "Minor",
@@ -20,9 +16,9 @@ export const majorScaleChordMap: Map = {
     5: "Major",
     6: "Minor",
     7: "Diminished"
-};
+}
 
-export const scaleStepsMap: Map = {
+export const ScaleSteps = {
     1: 2,
     2: 2,
     3: 1,
@@ -30,9 +26,9 @@ export const scaleStepsMap: Map = {
     5: 2,
     6: 2,
     7: 1
-};
+}
 
-export const noteMap: Map = {
+export const Notes = {
     1: "C",
     2: "C#",
     3: "D",
@@ -57,4 +53,4 @@ export const noteMap: Map = {
     22: "A",
     23: "Bb",
     24: "B"
-};
+}

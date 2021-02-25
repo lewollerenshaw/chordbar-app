@@ -1,41 +1,49 @@
 import React, { useState } from "react";
 import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid } from "@chakra-ui/react"
 import { KeyList, ModeList } from './constants/form';
+import { getChordProgression } from './services/generators';
 import './App.css';
 
-function App() {
-  const [key, setKey] = useState('');
-  const [mode, setMode] = useState('');
-  const [length, setLength] = useState('2');
+const App = () => {
+  const [key, setKey] = useState(0);
+  const [mode, setMode] = useState(0);
+  const [length, setLength] = useState(2);
   const [isDiminished, setIsDiminished] = useState(false);
   const [resolveRoot, setResolveRoot] = useState(true);
 
   const generateProgression = () => {
     console.log('hit');
 
-    if (key === '')
+    if (key || mode) {
       console.log('invalid');
-    if (mode === '')
-      console.log('invalid mode');
+    }
 
-    
+    const progression = getChordProgression(
+      key,
+      mode,
+      length
+    );
 
-  }
+    console.log(length);
+    console.log(isDiminished);
+    console.log(resolveRoot);
+  };
 
   return (
     <div className="App">
       <div className="header">
         <Heading as="h2" size="2xl">Chordbar</Heading>
-        <Heading as="h2" size="1xl">What'll it be?</Heading>
+        <Heading as="h2" size="1xl" color="gray">What'll it be?</Heading>
       </div>
 
       <form className="form">
         <div className="form__inputs">
           <SimpleGrid columns={[1, 1, 3]} spacing={10}>
             <Box>
-              <FormControl id="key" isRequired>
+              <FormControl id="key">
                 <FormLabel>Key</FormLabel>
-                <Select placeholder="Please select" onChange={(e) => setKey(e.target.value)}>
+                <Select onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setKey(Number(e.target.value))}>
+                  <option selected disabled>Please select</option>
                   {KeyList.map((key) => (
                     <option key={key.label} value={key.value}>{key.label}</option>
                   ))}
@@ -44,9 +52,10 @@ function App() {
               </FormControl>
             </Box>
             <Box>
-              <FormControl id="mode" isRequired>
+              <FormControl id="mode">
                 <FormLabel>Mode</FormLabel>
-                <Select placeholder="Please select" onChange={(e) => setMode(e.target.value)}>
+                <Select onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setMode(Number(e.target.value))}>
+                  <option selected disabled>Please select</option>
                   {ModeList.map((key) => (
                     <option key={key.label} value={key.value}>{key.label}</option>
                   ))}
@@ -57,7 +66,7 @@ function App() {
             <Box>
               <FormControl id="progression-length">
                 <FormLabel>Progression length</FormLabel>
-                <NumberInput defaultValue={2} min={2} max={10} onChange={(e) => setLength(e)}>
+                <NumberInput defaultValue={2} min={2} max={10} onChange={(e: React.SetStateAction<string>) => setLength(Number(e))}>
                   <NumberInputField />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
@@ -71,8 +80,8 @@ function App() {
         </div>
 
         <div className="form__actions">
-          <Checkbox className="form__actions__root" defaultChecked onChange={(e) => setResolveRoot(e.target.checked)}>Resolve on root</Checkbox>
-          <Checkbox onChange={(e) => setIsDiminished(e.target.checked)}>Diminished chord</Checkbox>
+          <Checkbox className="form__actions__root" defaultChecked onChange={(e: { target: { checked: React.SetStateAction<boolean>; }; }) => setResolveRoot(e.target.checked)}>Resolve on root</Checkbox>
+          <Checkbox onChange={(e: { target: { checked: React.SetStateAction<boolean>; }; }) => setIsDiminished(e.target.checked)}>Diminished chord</Checkbox>
         </div>
 
         <div className="form__submit">
