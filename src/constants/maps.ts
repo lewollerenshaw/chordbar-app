@@ -10,8 +10,8 @@ export const modes = [
 
 export const majorScale = [
     'Major',
-    'Minor1',
-    'Minor2',
+    'Minor',
+    'Minor',
     'Major',
     'Major',
     'Minor',

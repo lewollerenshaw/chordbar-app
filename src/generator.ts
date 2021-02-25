@@ -1,5 +1,6 @@
+import { ChordType } from './constants/enums';
 import { majorScale, notes, scaleSteps } from './constants/maps';
-import { Progression } from './constants/models';
+import { Chord, Progression } from './constants/models';
 
 export const getChordProgression = (
   key: number,
@@ -7,10 +8,16 @@ export const getChordProgression = (
   length: number,
   isDiminished: boolean,
   resolveRoot: boolean): Progression => {
+  console.log(isDiminished);
+
+
   const chords = getModalChords(mode);
   const steps = getModalSteps(mode);
   const notes = getModalNotes(key, steps);
-  console.log(notes);
+  const scale = mapModalScale(notes, chords);
+  const progression = buildChordProgression(scale, length, resolveRoot, isDiminished);
+
+  console.log(progression);
 
 
   const p: Progression = {
@@ -29,13 +36,13 @@ const getModalChords = (mode: number) => {
   }
 
   const precedingScaleChords = majorScale.slice(0, mode);
-  const modalScale = majorScale.slice(mode);
+  const modalChords = majorScale.slice(mode);
 
   precedingScaleChords.forEach(chord => {
-    modalScale.push(chord);
+    modalChords.push(chord);
   });
 
-  return modalScale;
+  return modalChords;
 };
 
 const getModalSteps = (mode: number) => {
@@ -67,3 +74,60 @@ const getModalNotes = (key: number, modalSteps: number[]) => {
   return modalNotes;
 }
 
+const mapModalScale = (notes: string[], chords: string[]) => {
+  const modalScale: Chord[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    const chord: Chord = {
+      Note: notes[i],
+      Type: chords[i]
+    };
+
+    modalScale[i] = chord;
+  }
+
+  return modalScale;
+}
+
+const buildChordProgression = (
+  chords: Chord[],
+  length: number,
+  resolveRoot: boolean,
+  isDiminished: boolean) => {
+  const progression: Chord[] = [];
+
+  if (resolveRoot) {
+    const root: Chord = {
+      Note: chords[0].Note,
+      Type: chords[0].Type
+    }
+
+    progression.push(root);
+  }
+
+  for (let i = progression.length; i < length; i++) {
+    if (isDiminished) {
+      const rand = Math.floor(Math.random() * 7);
+      const chord = chords[rand];
+
+      progression[i] = chord;
+    }
+
+    else {
+      let isValidChord = false;
+
+      do {
+        const rand = Math.floor(Math.random() * 6);
+        const chord = chords[rand];
+
+        if (chord.Type !== ChordType.Diminished) {
+          progression[i] = chord;
+          isValidChord = true;
+        }
+      }
+      while (!isValidChord)
+    }
+  }
+
+  return progression;
+}
