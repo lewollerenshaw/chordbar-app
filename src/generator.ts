@@ -7,27 +7,15 @@ export const getChordProgression = (
   mode: number,
   length: number,
   isDiminished: boolean,
-  resolveRoot: boolean): Progression => {
-  console.log(isDiminished);
-
-
+  resolveRoot: boolean): Chord[] => {
   const chords = getModalChords(mode);
   const steps = getModalSteps(mode);
   const notes = getModalNotes(key, steps);
   const scale = mapModalScale(notes, chords);
   const progression = buildChordProgression(scale, length, resolveRoot, isDiminished);
 
-  console.log(progression);
-
-
-  const p: Progression = {
-    Key: 'C',
-    Mode: 'Aoelian',
-    Length: '2',
-    Chords: [{ Note: 'C', Type: 'Major' }]
-  }
-
-  return p;
+  // TODO: Return progression object with populated information
+  return progression;
 };
 
 const getModalChords = (mode: number) => {
@@ -68,8 +56,6 @@ const getModalNotes = (key: number, modalSteps: number[]) => {
     modalNotes[i] = notes[root];
     root += modalSteps[i];
   }
-
-  console.log(modalNotes);
 
   return modalNotes;
 }
