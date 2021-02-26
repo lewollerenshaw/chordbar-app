@@ -6,7 +6,7 @@ export interface Chord {
 export interface Progression {
     Key: string,
     Mode: string,
-    Length: string,
+    Length: number,
     Chords: Chord[]
 };
 

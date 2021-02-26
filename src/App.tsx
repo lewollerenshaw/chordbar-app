@@ -15,7 +15,7 @@ const App = () => {
     if (key === null || mode === null) {
       console.log('Problem with form input');
     } else {
-      getChordProgression(key!, mode!, length, isDiminished, resolveRoot);
+      console.log(getChordProgression(key!, mode!, length, isDiminished, resolveRoot));
     }
   };
 

@@ -1,5 +1,5 @@
 import { ChordType } from './constants/enums';
-import { majorScale, notes, scaleSteps } from './constants/maps';
+import { majorScale, notes, scaleSteps, modes } from './constants/maps';
 import { Chord, Progression } from './constants/models';
 
 export const getChordProgression = (
@@ -7,15 +7,19 @@ export const getChordProgression = (
   mode: number,
   length: number,
   isDiminished: boolean,
-  resolveRoot: boolean): Chord[] => {
+  resolveRoot: boolean): Progression => {
   const chords = getModalChords(mode);
   const steps = getModalSteps(mode);
-  const notes = getModalNotes(key, steps);
-  const scale = mapModalScale(notes, chords);
+  const modalNotes = getModalNotes(key, steps);
+  const scale = mapModalScale(modalNotes, chords);
   const progression = buildChordProgression(scale, length, resolveRoot, isDiminished);
 
-  // TODO: Return progression object with populated information
-  return progression;
+  return {
+    Key: notes[key],
+    Mode: modes[mode],
+    Length: length,
+    Chords: progression
+  };
 };
 
 const getModalChords = (mode: number) => {
