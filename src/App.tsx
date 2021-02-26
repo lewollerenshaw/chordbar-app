@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid } from "@chakra-ui/react"
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid } from "@chakra-ui/react"
 import { KeyList, ModeList } from './constants/form';
 import { getChordProgression } from './generator';
 import './App.css';
@@ -14,6 +14,7 @@ const App = () => {
   const [length, setLength] = useState(2);
   const [isDiminished, setIsDiminished] = useState(false);
   const [resolveRoot, setResolveRoot] = useState(true);
+  const [showFormError, setShowFormError] = useState(false);
 
   /**
    * Chord grid logic variables
@@ -22,10 +23,11 @@ const App = () => {
 
   const generateProgression = () => {
     if (key === null || mode === null) {
-      console.log('Problem with form input');
+      setShowFormError(true);
     } else {
-      const progression = getChordProgression(key!, mode!, length, isDiminished, resolveRoot);
+      setShowFormError(false);
 
+      const progression = getChordProgression(key!, mode!, length, isDiminished, resolveRoot);
       setProgression(progression);
     }
   };
@@ -38,6 +40,13 @@ const App = () => {
       </div>
 
       <form className="form">
+        {showFormError &&
+          <Alert status="error" className="error">
+            <AlertIcon />
+            <AlertTitle mr={2}>Invalid properties!</AlertTitle>
+            <AlertDescription>Please check you have completed the form inputs.</AlertDescription>
+          </Alert>
+        }
         <div className="form__inputs">
           <SimpleGrid columns={[1, 1, 3]} spacing={10}>
             <Box>

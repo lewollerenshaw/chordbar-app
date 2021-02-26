@@ -31,6 +31,10 @@ body {
   margin-bottom: 2rem;
 }
 
+.error {
+  margin-bottom: 2rem;
+}
+
 .form__inputs {
   margin-bottom: 2rem;
 }
