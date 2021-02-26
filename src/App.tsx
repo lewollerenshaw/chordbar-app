@@ -3,19 +3,30 @@ import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading,
 import { KeyList, ModeList } from './constants/form';
 import { getChordProgression } from './generator';
 import './App.css';
+import { Progression } from "./constants/models";
 
 const App = () => {
+  /**
+   * Form inputs
+   */
   const [key, setKey] = useState<number | null>(null);
   const [mode, setMode] = useState<number | null>(null);
   const [length, setLength] = useState(2);
   const [isDiminished, setIsDiminished] = useState(false);
   const [resolveRoot, setResolveRoot] = useState(true);
 
+  /**
+   * Chord grid logic variables
+   */
+  const [progression, setProgression] = useState<Progression>();
+
   const generateProgression = () => {
     if (key === null || mode === null) {
       console.log('Problem with form input');
     } else {
-      console.log(getChordProgression(key!, mode!, length, isDiminished, resolveRoot));
+      const progression = getChordProgression(key!, mode!, length, isDiminished, resolveRoot);
+
+      setProgression(progression);
     }
   };
 
@@ -80,11 +91,13 @@ const App = () => {
       </form>
 
       <div className="chords">
-        <SimpleGrid columns={[1, 2, 4]} spacing={10}>
-          <Box bg="blue.300" height="80px"></Box>
-          <Box bg="blue.300" height="80px"></Box>
-          <Box bg="blue.300" height="80px"></Box>
-          <Box bg="blue.300" height="80px"></Box>
+        <SimpleGrid className="chords__grid" columns={[1, 2, 4]} spacing={10}>
+          {progression?.Chords.map((chord) => (
+            <Box bg="blue.300" height="80px"  >
+              <div>{chord.Note}</div>
+              <div>{chord.Type}</div>
+            </Box>
+          ))}
         </SimpleGrid>
       </div>
     </div>
