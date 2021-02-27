@@ -1,9 +1,30 @@
 import React, { useState } from "react";
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid } from "@chakra-ui/react"
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid, Text } from "@chakra-ui/react"
 import { KeyList, ModeList } from './constants/form';
+import { Chord } from './constants/models';
 import { getChordProgression } from './generator';
 import './App.css';
 import { Progression } from "./constants/models";
+
+interface GridChordProps {
+  chord: Chord
+}
+
+const GridChord = (props: GridChordProps) => {
+  const { chord } = props;
+
+  return (
+    <Box bg="blue.300" padding="2rem" borderRadius="lg" d="flex" flexDirection="column" justifyContent="center" alignItems="center" cursor="pointer">
+      <Box d="flex" flexDirection="column" alignItems="center">
+        <Box fontSize="large">
+          {chord.Degree}
+        </Box>
+        <Box fontSize="x-large">{chord.Note} {chord.Type}</Box>
+      </Box>
+
+    </Box>
+  )
+}
 
 const App = () => {
   /**
@@ -11,7 +32,7 @@ const App = () => {
    */
   const [key, setKey] = useState<number | null>(null);
   const [mode, setMode] = useState<number | null>(null);
-  const [length, setLength] = useState(2);
+  const [length, setLength] = useState(4);
   const [isDiminished, setIsDiminished] = useState(false);
   const [resolveRoot, setResolveRoot] = useState(true);
   const [showFormError, setShowFormError] = useState(false);
@@ -76,7 +97,7 @@ const App = () => {
             <Box>
               <FormControl id="progression-length">
                 <FormLabel>Progression length</FormLabel>
-                <NumberInput defaultValue={2} min={2} max={10} onChange={(e: React.SetStateAction<string>) => setLength(Number(e))}>
+                <NumberInput defaultValue={4} min={2} max={8} onChange={(e: React.SetStateAction<string>) => setLength(Number(e))}>
                   <NumberInputField />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
@@ -101,11 +122,8 @@ const App = () => {
 
       <div className="chords">
         <SimpleGrid className="chords__grid" columns={[1, 2, 4]} spacing={10}>
-          {progression?.Chords.map((chord) => (
-            <Box bg="blue.300" height="80px"  >
-              <div>{chord.Note}</div>
-              <div>{chord.Type}</div>
-            </Box>
+          {progression?.Chords.map((c) => (
+            <GridChord chord={c} />
           ))}
         </SimpleGrid>
       </div>

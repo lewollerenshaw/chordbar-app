@@ -1,6 +1,7 @@
 export interface Chord {
     Note: string,
-    Type: string
+    Type: string,
+    Degree: string
 };
 
 export interface Progression {
