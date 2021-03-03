@@ -1,5 +1,5 @@
 import { ChordType } from './constants/enums';
-import { majorScale, notes, scaleSteps, modes } from './constants/maps';
+import { majorScale, notes, scaleSteps, modes, degrees } from './constants/maps';
 import { Chord, Progression } from './constants/models';
 
 export const getChordProgression = (
@@ -22,7 +22,7 @@ export const getChordProgression = (
   };
 };
 
-const getModalChords = (mode: number) => {
+const getModalChords = (mode: number): string[] => {
   if (mode === 0) {
     return majorScale;
   }
@@ -37,7 +37,7 @@ const getModalChords = (mode: number) => {
   return modalChords;
 };
 
-const getModalSteps = (mode: number) => {
+const getModalSteps = (mode: number): number[] => {
   if (mode === 0) {
     return scaleSteps;
   }
@@ -52,7 +52,7 @@ const getModalSteps = (mode: number) => {
   return modalSteps;
 }
 
-const getModalNotes = (key: number, modalSteps: number[]) => {
+const getModalNotes = (key: number, modalSteps: number[]): string[] => {
   let root = key;
   const modalNotes: string[] = [];
 
@@ -64,13 +64,14 @@ const getModalNotes = (key: number, modalSteps: number[]) => {
   return modalNotes;
 }
 
-const mapModalScale = (notes: string[], chords: string[]) => {
+const mapModalScale = (notes: string[], chords: string[]): Chord[] => {
   const modalScale: Chord[] = [];
 
   for (let i = 0; i < 7; i++) {
     const chord: Chord = {
       Note: notes[i],
-      Type: chords[i]
+      Type: chords[i],
+      Degree: degrees[i]
     };
 
     modalScale[i] = chord;
@@ -87,12 +88,7 @@ const buildChordProgression = (
   const progression: Chord[] = [];
 
   if (resolveRoot) {
-    const root: Chord = {
-      Note: chords[0].Note,
-      Type: chords[0].Type
-    }
-
-    progression.push(root);
+    progression.push(chords[0]);
   }
 
   for (let i = progression.length; i < length; i++) {
