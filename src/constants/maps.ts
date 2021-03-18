@@ -1,66 +1,50 @@
 export const modes = [
-    'Ionian',
-    'Dorian',
-    'Phrygian',
-    'Lydian',
-    'Mixolydian',
-    'Aoelian',
-    'Locrian'
+  'Ionian',
+  'Dorian',
+  'Phrygian',
+  'Lydian',
+  'Mixolydian',
+  'Aoelian',
+  'Locrian'
 ]
 
 export const majorScale = [
-    'Major',
-    'Minor',
-    'Minor',
-    'Major',
-    'Major',
-    'Minor',
-    'Diminished'
+  'Major',
+  'Minor',
+  'Minor',
+  'Major',
+  'Major',
+  'Minor',
+  'Diminished'
 ]
 
-export const scaleSteps = [
-    2,
-    2,
-    1,
-    2,
-    2,
-    2,
-    1
-]
+export const scaleSteps = [2, 2, 1, 2, 2, 2, 1]
 
-export const degrees = [
-    'I',
-    'II',
-    'III',
-    'IV',
-    'V',
-    'VI',
-    'VII'
-]
+export const degrees = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
 
 export const notes = [
-    'C',
-    'C#',
-    'D',
-    'Eb',
-    'E',
-    'F',
-    'F#',
-    'G',
-    'Ab',
-    'A',
-    'Bb',
-    'B',
-    'C',
-    'C#',
-    'D',
-    'Eb',
-    'E',
-    'F',
-    'F#',
-    'G',
-    'Ab',
-    'A',
-    'Bb',
-    'B'
+  'C',
+  'C#',
+  'D',
+  'Eb',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'Ab',
+  'A',
+  'Bb',
+  'B',
+  'C',
+  'C#',
+  'D',
+  'Eb',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'Ab',
+  'A',
+  'Bb',
+  'B'
 ]
