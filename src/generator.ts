@@ -1,119 +1,123 @@
-import { ChordType } from './constants/enums';
-import { majorScale, notes, scaleSteps, modes, degrees } from './constants/maps';
-import { Chord, Progression } from './constants/models';
+import { ChordType } from './constants/enums'
+import { majorScale, notes, scaleSteps, modes, degrees } from './constants/maps'
+import { Chord, Progression } from './constants/models'
 
 export const getChordProgression = (
   key: number,
   mode: number,
   length: number,
   isDiminished: boolean,
-  resolveRoot: boolean): Progression => {
-  const chords = getModalChords(mode);
-  const steps = getModalSteps(mode);
-  const modalNotes = getModalNotes(key, steps);
-  const scale = mapModalScale(modalNotes, chords);
-  const progression = buildChordProgression(scale, length, resolveRoot, isDiminished);
+  resolveRoot: boolean
+): Progression => {
+  const chords = getModalChords(mode)
+  const steps = getModalSteps(mode)
+  const modalNotes = getModalNotes(key, steps)
+  const scale = mapModalScale(modalNotes, chords)
+  const progression = buildChordProgression(
+    scale,
+    length,
+    resolveRoot,
+    isDiminished
+  )
 
   return {
     Key: notes[key],
     Mode: modes[mode],
     Length: length,
     Chords: progression
-  };
-};
+  }
+}
 
 const getModalChords = (mode: number): string[] => {
   if (mode === 0) {
-    return majorScale;
+    return majorScale
   }
 
-  const precedingScaleChords = majorScale.slice(0, mode);
-  const modalChords = majorScale.slice(mode);
+  const precedingScaleChords = majorScale.slice(0, mode)
+  const modalChords = majorScale.slice(mode)
 
-  precedingScaleChords.forEach(chord => {
-    modalChords.push(chord);
-  });
+  precedingScaleChords.forEach((chord) => {
+    modalChords.push(chord)
+  })
 
-  return modalChords;
-};
+  return modalChords
+}
 
 const getModalSteps = (mode: number): number[] => {
   if (mode === 0) {
-    return scaleSteps;
+    return scaleSteps
   }
 
-  const precedingSteps = scaleSteps.slice(0, mode);
-  const modalSteps = scaleSteps.slice(mode);
+  const precedingSteps = scaleSteps.slice(0, mode)
+  const modalSteps = scaleSteps.slice(mode)
 
-  precedingSteps.forEach(step => {
-    modalSteps.push(step);
-  });
+  precedingSteps.forEach((step) => {
+    modalSteps.push(step)
+  })
 
-  return modalSteps;
+  return modalSteps
 }
 
 const getModalNotes = (key: number, modalSteps: number[]): string[] => {
-  let root = key;
-  const modalNotes: string[] = [];
+  let root = key
+  const modalNotes: string[] = []
 
   for (let i = 0; i < 7; i++) {
-    modalNotes[i] = notes[root];
-    root += modalSteps[i];
+    modalNotes[i] = notes[root]
+    root += modalSteps[i]
   }
 
-  return modalNotes;
+  return modalNotes
 }
 
 const mapModalScale = (notes: string[], chords: string[]): Chord[] => {
-  const modalScale: Chord[] = [];
+  const modalScale: Chord[] = []
 
   for (let i = 0; i < 7; i++) {
     const chord: Chord = {
       Note: notes[i],
       Type: chords[i],
       Degree: degrees[i]
-    };
+    }
 
-    modalScale[i] = chord;
+    modalScale[i] = chord
   }
 
-  return modalScale;
+  return modalScale
 }
 
 const buildChordProgression = (
   chords: Chord[],
   length: number,
   resolveRoot: boolean,
-  isDiminished: boolean) => {
-  const progression: Chord[] = [];
+  isDiminished: boolean
+) => {
+  const progression: Chord[] = []
 
   if (resolveRoot) {
-    progression.push(chords[0]);
+    progression.push(chords[0])
   }
 
   for (let i = progression.length; i < length; i++) {
     if (isDiminished) {
-      const rand = Math.floor(Math.random() * 7);
-      const chord = chords[rand];
+      const rand = Math.floor(Math.random() * 7)
+      const chord = chords[rand]
 
-      progression[i] = chord;
-    }
-
-    else {
-      let isValidChord = false;
+      progression[i] = chord
+    } else {
+      let isValidChord = false
 
       do {
-        const rand = Math.floor(Math.random() * 6);
-        const chord = chords[rand];
+        const rand = Math.floor(Math.random() * 6)
+        const chord = chords[rand]
 
         if (chord.Type !== ChordType.Diminished) {
-          progression[i] = chord;
-          isValidChord = true;
+          progression[i] = chord
+          isValidChord = true
         }
-      }
-      while (!isValidChord)
+      } while (!isValidChord)
     }
   }
 
-  return progression;
+  return progression
 }
